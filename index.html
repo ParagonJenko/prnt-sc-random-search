@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Random Prnt Sc Searcher</title>
+
+    <style>
+        button {
+            display: inline-block;
+            padding: 0.3em 1.2em;
+            margin: 0 0.3em 0.3em 0;
+            border-radius: 2em;
+            box-sizing: border-box;
+            text-decoration: none;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            color: #FFFFFF;
+            background-color: #4eb5f1;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background-color: #4095c6;
+        }
+
+        @media all and (max-width:30em) {
+            button {
+                display: block;
+                margin: 0.2em auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="searchButtonPrntSc">Random Prnt Sc</button>
+
+    <script type="text/javascript">
+
+        function getRandomValue(array) {
+            const min = 0; // an integer
+            const max = array.length; // guaranteed to be an integer
+
+            /*
+             Math.random() will return a random number [0, 1) Notice here that it does not include 1 itself
+             So basically it is from 0 to .9999999999999999
+         
+             We multiply this random number by the difference between max and min (max - min). Here our min is always 0.
+             so now we are basically getting a value from 0 to just less than array.length
+             BUT we then call Math.floor on this function which returns the given number rounded down to the nearest integer
+             So Math.floor(Math.random() * (max - min)) returns 0 to array.length - 1
+             This gives us a random index in the array
+            */
+            const randomIndex = Math.floor(Math.random() * (max - min)) + min;
+
+            // then we grab the item that is located at that random index and return it
+            return array[randomIndex];
+        }
+
+        function getRandomString(charset, length) {
+            var result = '';
+            for (var i = 0; i <= length; i++) {
+                result += getRandomValue(charset);
+            }
+            return result;
+        }
+
+        function UrlExists(url) {
+            var http = new XMLHttpRequest();
+            http.open('HEAD', url, false);
+            http.send();
+            if (http.status != 404) {
+                window.open(url);
+            }
+            else {
+                window.location.reload();
+            }
+
+        }
+
+        document.getElementById("searchButtonPrntSc").onclick = function () {
+            var randomStringText = getRandomString("abcdefghijklmnopqrstuwvxyz", 1);
+            var randomStringNumbers = getRandomString("1234567890", 3);
+            //var randomStringText = getRandomString("1234567890", 2);
+            window.open("https://prnt.sc/" + randomStringText + randomStringNumbers, "_blank");
+        };
+    </script>
+
+</body>
+
+</html>
